@@ -1,0 +1,26 @@
+- name: "apache is installed"
+  yum:
+    name: httpd
+    state: latest 
+- name: "Config apache"
+  copy:
+    src: blog-vhost.conf
+    dest: /etc/httpd/conf.d/blog.conf
+- name: "EPEL installed"
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    state: present
+- name: "Php repo installed"
+  yum:
+    name: https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    state: present
+- name: "PHP is installed"
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - php80
+      - php80-php
+      - php80-php-mysqlnd
+      - php80-php-pecl-mysql

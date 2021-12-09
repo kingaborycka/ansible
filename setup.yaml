@@ -1,0 +1,36 @@
+---
+- hosts: wp_nodes
+  become: yes
+  vars_files:
+    - vars/main.yaml
+  tasks:
+    - include_tasks: tasks/db.yaml
+    - include_tasks: tasks/os.yaml
+    - include_tasks: tasks/wp.yaml
+    - name: Restart apache
+      systemd:
+        name: httpd
+        state: reloaded
+- hosts: load_balancer
+  become: yes
+  vars:
+    app_ips:
+      - 172.31.2.56:80
+      - 172.31.13.168:80
+  tasks:
+    - name: install epel
+      yum:
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        state: present
+    - name: install nginx
+      yum:
+        name: nginx
+        state: present
+    - name: put nginx conf
+      template:
+        src: files/lb.conf
+        dest: /etc/nginx/conf.d/blog.conf
+    - name: reload nginx
+      systemd:
+        name: nginx
+        state: reloaded
