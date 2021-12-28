@@ -20,6 +20,7 @@ First part of this file (starts with `hosts: flask_node`) is a configuration for
 6. `start service` - start service (CeneoScrapper Application on port 8080) 
 
 <hr>
+
 ## Network
 
 The second part (starts with `hosts: load_balancer`) is a configuration for a simple server proxy.
