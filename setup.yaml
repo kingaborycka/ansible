@@ -7,10 +7,7 @@
     - include_tasks: tasks/db.yaml
     - include_tasks: tasks/os.yaml
     - include_tasks: tasks/wp.yaml
-    - name: Restart apache
-      systemd:
-        name: httpd
-        state: reloaded
+
 - hosts: load_balancer
   become: yes
   vars:
