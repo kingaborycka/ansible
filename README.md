@@ -10,7 +10,7 @@ This repository contains two Ansible Playbooks:
 
 ## setup-flaskApp.yaml
 <hr>
-First part of this file (starts with `hosts: flask_node`) is a configuration for run flask application, the second part (starts with `hosts: load_balancer`) is an appendix - configuration for simple proxy server. We will focus only on this first part installation steps:
+First part of this file (starts with `hosts: flask_node`) is a configuration for run flask application:
 
 1. `install os packages` - install packages: python3, python3-pip, git using yum<br>
 2. `sync repo` - get a git repository (*https://github.com/kingaborycka/CeneoScraper.git*) to the target place on server (*"/opt/CeneoScrapper"*)
@@ -18,9 +18,27 @@ First part of this file (starts with `hosts: flask_node`) is a configuration for
 4. `create venv` - create a virtual environment with python3
 5. `put systemd cfg` - put flask app configuration file to the target place on server (*/etc/systemd/system/CeneoScrapper.service*)
 6. `start service` - start service (CeneoScrapper Application on port 8080) 
+
+<hr>
+## Network
+
+The second part (starts with `hosts: load_balancer`) is a configuration for a simple server proxy.
+
+LAN: 172.31.0.0/20
+
+### Server with Flask App:
+public IP address: 3.71.10.1
+private IP address: 172.31.17.234
+
+### Server Proxy:
+public IP address: 18.184.189.117
+private IP address: 172.31.19.237
+
+Server Proxy redirects all calls to the server with running Flask App (172.31.17.234:8080)
+
 <br>
 
-![Flask App](/files/images/flask.jpg "Flask App")
+![Flask App](/files/images/flaskApp.jpg "Flask App")
 
 <br>
 
